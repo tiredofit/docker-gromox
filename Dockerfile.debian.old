@@ -1,0 +1,124 @@
+ARG PHP_BASE=8.0
+ARG DISTRO="debian"
+ARG DISTRO_VARIANT="bullseye"
+
+FROM docker.io/tiredofit/nginx-php-fpm:${DISTRO}-${PHP_BASE}-${DISTRO_VARIANT} as gromox-builder
+LABEL maintainer="Dave Conroy (github.com/tiredofit)"
+
+ARG GROMOX_VERSION
+ARG GROMOX_REPO_URL
+
+ENV GO_VERSION=1.19.1 \
+    GROMOX_VERSION=${GROMOX_VERSION:-"gromox-1.32"} \
+    GROMOX_REPO_URL=${GROMOX_REPO_URL:-"https://github.com/grommunio/gromox.git"}
+
+ADD build-assets /build-assets
+
+RUN source /assets/functions/00-container && \
+    set -x && \
+    ### Add user and Group
+    addgroup --gid 998 grommunio && \
+    adduser --uid 998 \
+            --gid 998 \
+            --gecos "Grommunio User" \
+            --home /dev/null \
+            --no-create-home \
+            --shell /sbin/nologin \
+            --disabled-login \
+            --disabled-password \
+            gromunnio && \
+    \
+    curl -sSL https://download.grommunio.com/RPM-GPG-KEY-grommunio | apt-key add - && \
+    echo "deb [trusted=yes] https://download.grommunio.com/community/packages/Debian_11 Debian_11 main" > /etc/apt/sources.list.d/grommunio.list && \
+    apt-get update && \
+    apt-get upgrade -y && \
+    BUILD_DEPS=" \
+                        autoconf \
+                        automake \
+                        autotools-dev \
+                        g++ \
+                        gettext \
+                        git \
+                        make \
+                        pkg-config \
+                        zlib1g-dev \
+                        zstd \
+                        " \
+                        && \
+    GROMOX_BUILD_DEPS="\
+                        libcurl4-openssl-dev \
+                        libgumbo-dev \
+                        libfmt-dev \
+                        libhx-dev \
+                        libjsoncpp-dev \
+                        libldap2-dev \
+                        libmariadb-dev \
+                        libssl-dev \
+                        libsqlite3-dev \
+                        libtinyxml2-dev \
+                        libvmime-dev \
+                        libzstd-dev \
+                        php${PHP_BASE}-dev \
+                        zlib1g-dev \
+                        " \
+                        && \
+    \
+    apt-get install -y --no-install-recommends \
+                        ${BUILD_DEPS} \
+                        && \
+    \
+    ### Build Gromox
+    apt-get install -y --no-install-recommends \
+                        ${GROMOX_BUILD_DEPS} \
+                        && \
+    clone_git_repo ${GROMOX_REPO_URL} ${GROMOX_VERSION} /usr/src/gromox && \
+    if [ -d "/build-assets/src" ] ; then cp -Rp /build-assets/src/* /usr/src/kopano-core ; fi; \
+    if [ -d "/build-assets/scripts" ] ; then for script in /build-assets/scripts/*.sh; do echo "** Applying $script"; bash $script; done ; fi ; \
+    mkdir -p /rootfs/assets/.changelogs/ && \
+    autoreconf -fiv && \
+    ./configure \
+                --prefix /usr \
+                --exec-prefix=/usr \
+                --localstatedir=/var \
+                --libdir=/usr/lib \
+                --sysconfdir=/etc \
+                --sbindir=/usr/bin \
+                --datarootdir=/usr/share \
+                --includedir=/usr/include \
+                --enable-release \
+                --enable-static \
+                && \
+    echo "** Starting to build Gromox Core with '$(php -v | head -n1)'" && \
+    make -j$(nproc) && \
+    make \
+        DESTDIR=/rootfs \
+        install \
+        && \
+    \
+    mkdir -p /rootfs/assets/grommunio/config && \
+    mkdir -p /rootfs/etc/php/${PHP_BASE}/mods-available/ && \
+    mv /rootfs/etc/php/${PHP_BASE}/cli/conf.d/mapi.ini /rootfs/etc/php/${PHP_BASE}/mods-available/ && \
+    echo ";priority=20" >> /rootfs/etc/php/${PHP_BASE}/mods-available/mapi.ini && \
+    ln -sf /config /rootfs/etc/grommunio && \
+    cd /rootfs && \
+    find . -name .git -type d -print0|xargs -0 rm -rf -- && \
+    echo "Gromox ${GROMOX_VERSION} built from ${GROMOX_REPO_URL} on $(date)" > /rootfs/assets/.changelogs/gromox.version && \
+    echo "Commit: $(cd /usr/src/gromox ; echo $(git rev-parse HEAD))" >> /rootfs/assets/.changelogs/gromox.version && \
+    env | grep GROMOX | sort >> /rootfs/assets/.changelogs/gromox.version && \
+    mkdir -p /gromox && \
+    tar cavf /gromox/gromox.tar.zst . && \
+    ### Cleanup
+    apt-get purge -y \
+                ${BUILD_DEPS} \
+                ${GROMOX_BUILD_DEPS} \
+                && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /rootfs/* && \
+    rm -rf /usr/src/*
+
+FROM scratch
+LABEL maintainer="Dave Conroy (github.com/tiredofit)"
+
+COPY --from=gromox-builder /gromox/* /gromox/
+ADD CHANGELOG.md /tiredofit_docker-gromox.md
