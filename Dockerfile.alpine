@@ -69,18 +69,8 @@ RUN source /assets/functions/00-container && \
         && \
     \
     clone_git_repo ${GROMOX_REPO_URL} ${GROMOX_VERSION} && \
-#                ### PROD DEPS
-#                # libcurl \
-#                # fmt \
-#                # jsoncpp \
-#                # mariadb-connector-c \
-#                # libldap \
-#                # sqlite \
-#                # tinyxml2 \
-#                # w3m \
-#                # zstd
      \
-     apk add -t .gromox-build-deps \
+    apk add -t .gromox-build-deps \
                 curl-dev \
                 fmt-dev \
                 gumbo-parser-dev \
@@ -127,7 +117,7 @@ RUN source /assets/functions/00-container && \
     mkdir -p /rootfs/etc/${php_conf_dir}/mods-available/ && \
     mv /rootfs/etc/${php_conf_dir}/conf.d/mapi.ini /rootfs/etc/${php_conf_dir}/mods-available/ && \
     echo ";priority=20" >> /rootfs/etc/${php_conf_dir}/mods-available/mapi.ini && \
-    ln -sf /config /rootfs/etc/grommunio && \
+    ln -sf /config /rootfs/etc/gromox && \
     cd /rootfs && \
     find . -name .git -type d -print0|xargs -0 rm -rf -- && \
     echo "Gromox ${GROMOX_VERSION} built from ${GROMOX_REPO_URL} on $(date)" > /rootfs/assets/.changelogs/gromox.version && \

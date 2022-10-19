@@ -24,16 +24,16 @@ ADD build-assets /build-assets
 RUN source /assets/functions/00-container && \
     set -x && \
     ### Add user and Group
-    addgroup --gid 998 grommunio && \
+    addgroup --gid 998 gromox && \
     adduser --uid 998 \
             --gid 998 \
-            --gecos "Grommunio User" \
+            --gecos "Gromox User" \
             --home /dev/null \
             --no-create-home \
             --shell /sbin/nologin \
             --disabled-login \
             --disabled-password \
-            gromunnio && \
+            gromox && \
     \
     apt-get update && \
     apt-get upgrade -y && \
@@ -161,7 +161,7 @@ RUN source /assets/functions/00-container && \
     mkdir -p /rootfs/etc/php/${PHP_BASE}/mods-available/ && \
     mv /rootfs/etc/php/${PHP_BASE}/cli/conf.d/mapi.ini /rootfs/etc/php/${PHP_BASE}/mods-available/ && \
     echo ";priority=20" >> /rootfs/etc/php/${PHP_BASE}/mods-available/mapi.ini && \
-    ln -sf /config /rootfs/etc/grommunio && \
+    ln -sf /config /rootfs/etc/gromox && \
     cd /rootfs && \
     find . -name .git -type d -print0|xargs -0 rm -rf -- && \
     echo "Gromox ${GROMOX_VERSION} built from ${GROMOX_REPO_URL} on $(date)" > /rootfs/assets/.changelogs/gromox.version && \
