@@ -1,3 +1,9 @@
+## 1.0.3 2022-10-20 <dave at tiredofit dot ca>
+
+   ### Added
+      - Switch to master branch to solve Alpine issue with midb
+
+
 ## 1.0.2 2022-10-19 <dave at tiredofit dot ca>
 
    ### Added
