@@ -2,7 +2,6 @@
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/gromox.svg)](https://hub.docker.com/r/tiredofit/gromox)
 [![Docker Stars](https://img.shields.io/docker/stars/tiredofit/gromox.svg)](https://hub.docker.com/r/tiredofit/gromox)
-[![Docker Layers](https://images.microbadger.com/badges/image/tiredofit/gromox.svg)](https://microbadger.com/images/tiredofit/gromox)
 
 ## About
 

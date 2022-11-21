@@ -12,7 +12,7 @@ ENV GO_VERSION=1.19.1 \
     GROMOX_VERSION=${GROMOX_VERSION:-"gromox-1.32"} \
     GROMOX_REPO_URL=${GROMOX_REPO_URL:-"https://github.com/grommunio/gromox.git"}
 
-ADD build-assets /build-assets
+COPY build-assets /build-assets
 
 RUN source /assets/functions/00-container && \
     set -x && \
@@ -121,4 +121,4 @@ FROM scratch
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 COPY --from=gromox-builder /gromox/* /gromox/
-ADD CHANGELOG.md /tiredofit_docker-gromox.md
+COPY CHANGELOG.md /tiredofit_docker-gromox.md

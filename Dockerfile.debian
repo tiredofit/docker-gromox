@@ -10,7 +10,7 @@ ARG LIBFMT_REPO_URL
 ARG LIBHX_REPO_URL
 ARG LIBVMIME_REPO_URL
 
-ENV GROMOX_VERSION=${GROMOX_VERSION:-"master"} \
+ENV GROMOX_VERSION=${GROMOX_VERSION:-"1.34"} \
     LIBFMT_VERSION=${LIBFMT_VERSION:-"9.1.0"} \
     LIBHX_VERSION=${LIBHX_VERSION:-"v4.6"} \
     LIBVMIME_VERSION=${LIBVMIME_VERSION:-"fc69321d5304c73be685c890f3b30528aadcfeaf"} \
@@ -19,7 +19,7 @@ ENV GROMOX_VERSION=${GROMOX_VERSION:-"master"} \
     LIBHX_REPO_URL=${LIBHX_REPO_URL:-"https://github.com/jengelh/libhx"} \
     LIBVMIME_REPO_URL=${LIBVMIME_REPO_URL:-"https://github.com/kisli/vmime"}
 
-ADD build-assets /build-assets
+COPY build-assets /build-assets
 
 RUN source /assets/functions/00-container && \
     set -x && \
@@ -166,7 +166,7 @@ RUN source /assets/functions/00-container && \
     find . -name .git -type d -print0|xargs -0 rm -rf -- && \
     echo "Gromox ${GROMOX_VERSION} built from ${GROMOX_REPO_URL} on $(date)" > /rootfs/assets/.changelogs/gromox.version && \
     echo "Commit: $(cd /usr/src/gromox ; echo $(git rev-parse HEAD))" >> /rootfs/assets/.changelogs/gromox.version && \
-    env | grep GROMOX | sort >> /rootfs/assets/.changelogs/gromox.version && \
+    env | grep ^GROMOX | sort >> /rootfs/assets/.changelogs/gromox.version && \
     mkdir -p /gromox && \
     tar cavf /gromox/gromox.tar.zst . && \
     ### Cleanup
@@ -183,5 +183,5 @@ FROM scratch
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 COPY --from=gromox-builder /gromox/* /gromox/
-ADD CHANGELOG.md /tiredofit_docker-gromox.md
+COPY CHANGELOG.md /tiredofit_docker-gromox.md
 
