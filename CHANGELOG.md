@@ -1,3 +1,9 @@
+## 1.0.6 2022-11-22 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Switch tag style
+
+
 ## 1.0.5 2022-11-22 <dave at tiredofit dot ca>
 
    ### Added

@@ -10,7 +10,7 @@ ARG LIBHX_VERSION
 ARG LIBHX_REPO_URL
 ARG LIBVMIME_VERSION
 
-ENV GROMOX_VERSION=${GROMOX_VERSION:-"1.34"} \
+ENV GROMOX_VERSION=${GROMOX_VERSION:-"gromox-1.34"} \
     LIBHX_VERSION=${LIBHX_VERSION:-"v4.6"} \
     LIBHX_REPO_URL=${LIBHX_REPO_URL:-"https://codeberg.org/jengelh/libhx"} \
     LIBVMIME_VERSION=${LIBVMIME_VERSION:-"fc69321d5304c73be685c890f3b30528aadcfeaf"} \
@@ -120,7 +120,7 @@ RUN source /assets/functions/00-container && \
     ln -sf /config /rootfs/etc/gromox && \
     cd /rootfs && \
     find . -name .git -type d -print0|xargs -0 rm -rf -- && \
-    echo "Gromox ${GROMOX_VERSION} built from ${GROMOX_REPO_URL} on $(date)" > /rootfs/assets/.changelogs/gromox.version && \
+    echo "Gromox ${GROMOX_VERSION/gromox-/} built from ${GROMOX_REPO_URL} on $(date)" > /rootfs/assets/.changelogs/gromox.version && \
     echo "Commit: $(cd /usr/src/gromox ; echo $(git rev-parse HEAD))" >> /rootfs/assets/.changelogs/gromox.version && \
     env | grep ^GROMOX | sort >> /rootfs/assets/.changelogs/gromox.version && \
     mkdir -p /gromox && \
