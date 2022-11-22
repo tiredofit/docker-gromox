@@ -12,9 +12,9 @@ ARG LIBVMIME_VERSION
 
 ENV GROMOX_VERSION=${GROMOX_VERSION:-"1.34"} \
     LIBHX_VERSION=${LIBHX_VERSION:-"v4.6"} \
-    LIBHX_REPO_URL=${LIBHX_REPO_URL:-"https://github.com/jengelh/libhx"} \
+    LIBHX_REPO_URL=${LIBHX_REPO_URL:-"https://codeberg.org/jengelh/libhx"} \
     LIBVMIME_VERSION=${LIBVMIME_VERSION:-"fc69321d5304c73be685c890f3b30528aadcfeaf"} \
-    GROMOX_REPO_URL=${GROMOX_REPO_URL:-"https://github.com/grommunio/gromox"} \
+    GROMOX_REPO_URL=${GROMOX_REPO_URL:-"https://github.com/gromox/gromox"} \
     LIBVMIME_REPO_URL=${LIBVMIME_REPO_URL:-"https://github.com/kisli/vmime"}
 
 RUN source /assets/functions/00-container && \

@@ -1,3 +1,9 @@
+## 1.0.5 2022-11-22 <dave at tiredofit dot ca>
+
+   ### Added
+      - Change repo locations for LibHX and Gromox
+
+
 ## 1.0.4 2022-11-21 <dave at tiredofit dot ca>
 
    ### Added
