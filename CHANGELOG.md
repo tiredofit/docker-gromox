@@ -1,3 +1,9 @@
+## 1.0.8 2022-12-11 <dave at tiredofit dot ca>
+
+   ### Added
+      - Gromox 1.36
+
+
 ## 1.0.7 2022-11-25 <dave at tiredofit dot ca>
 
    ### Added
