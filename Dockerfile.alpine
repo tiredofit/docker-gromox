@@ -10,8 +10,8 @@ ARG LIBHX_VERSION
 ARG LIBHX_REPO_URL
 ARG LIBVMIME_VERSION
 
-ENV GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.3"} \
-    LIBHX_VERSION=${LIBHX_VERSION:-"v4.6"} \
+ENV GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.6"} \
+    LIBHX_VERSION=${LIBHX_VERSION:-"v4.12"} \
     LIBHX_REPO_URL=${LIBHX_REPO_URL:-"https://codeberg.org/jengelh/libhx"} \
     LIBVMIME_VERSION=${LIBVMIME_VERSION:-"fc69321d5304c73be685c890f3b30528aadcfeaf"} \
     GROMOX_REPO_URL=${GROMOX_REPO_URL:-"https://github.com/gromox/gromox"} \
@@ -26,6 +26,7 @@ RUN source /assets/functions/00-container && \
                automake \
                build-base \
                libtool \
+               linux-headers \
                git \
                && \
     \

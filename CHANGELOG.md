@@ -1,3 +1,10 @@
+## 1.0.11 2023-03-14 <dave at tiredofit dot ca>
+
+   ### Added
+      - Gromox 2.6
+      - LibHX 4.12
+
+
 ## 1.0.10 2023-02-03 <dave at tiredofit dot ca>
 
    ### Added

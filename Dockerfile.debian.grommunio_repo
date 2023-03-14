@@ -8,8 +8,8 @@ LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 ARG GROMOX_VERSION
 ARG GROMOX_REPO_URL
 
-ENV GO_VERSION=1.19.1 \
-    GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.2"} \
+ENV GO_VERSION=1.19.6 \
+    GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.6"} \
     GROMOX_REPO_URL=${GROMOX_REPO_URL:-"https://github.com/grommunio/gromox.git"}
 
 COPY build-assets /build-assets
