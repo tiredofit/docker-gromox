@@ -14,7 +14,7 @@ ARG LIBFMT_REPO_URL
 ARG LIBHX_REPO_URL
 ARG LIBVMIME_REPO_URL
 
-ENV GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.6"} \
+ENV GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.4"} \
     LIBFMT_VERSION=${LIBFMT_VERSION:-"9.1.0"} \
     LIBHX_VERSION=${LIBHX_VERSION:-"v4.12"} \
     LIBVMIME_VERSION=${LIBVMIME_VERSION:-"fc69321d5304c73be685c890f3b30528aadcfeaf"} \
@@ -66,13 +66,17 @@ RUN source /assets/functions/00-container && \
                         libgsasl-dev \
                         " && \
     GROMOX_BUILD_DEPS="\
+                        libbfio-dev \
                         libcurl4-openssl-dev \
                         libgumbo-dev \
                         libjsoncpp-dev \
                         libldap2-dev \
+                        libpff-dev \
+                        libolecf-dev \
                         libmariadb-dev \
                         libssl-dev \
                         libsqlite3-dev \
+                        libxml2-dev \
                         libtinyxml2-dev \
                         libzstd-dev \
                         php${PHP_BASE}-dev \

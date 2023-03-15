@@ -1,5 +1,5 @@
 ARG DISTRO="alpine"
-ARG PHP_BASE=8.0
+ARG PHP_BASE=8.2
 
 FROM docker.io/tiredofit/nginx-php-fpm:${DISTRO}-${PHP_BASE} as gromox-builder
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
@@ -13,7 +13,7 @@ ARG LIBVMIME_VERSION
 ENV GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.6"} \
     LIBHX_VERSION=${LIBHX_VERSION:-"v4.12"} \
     LIBHX_REPO_URL=${LIBHX_REPO_URL:-"https://codeberg.org/jengelh/libhx"} \
-    LIBVMIME_VERSION=${LIBVMIME_VERSION:-"fc69321d5304c73be685c890f3b30528aadcfeaf"} \
+    LIBVMIME_VERSION=${LIBVMIME_VERSION:-"c6904bd7cf03f6cca92cf0d15aec02e7850e0276"} \
     GROMOX_REPO_URL=${GROMOX_REPO_URL:-"https://github.com/gromox/gromox"} \
     LIBVMIME_REPO_URL=${LIBVMIME_REPO_URL:-"https://github.com/kisli/vmime"}
 
@@ -30,7 +30,7 @@ RUN source /assets/functions/00-container && \
                git \
                && \
     \
-    clone_git_repo ${LIBHX_REPO_URL} ${LIBHX_VERSION} && \
+    clone_git_repo "${LIBHX_REPO_URL}" "${LIBHX_VERSION}" && \
     cd /usr/src/libhx && \
     autoreconf -fiv && \
     ./configure \
@@ -78,12 +78,13 @@ RUN source /assets/functions/00-container && \
                 jsoncpp-dev \
                 mariadb-connector-c-dev \
                 openldap-dev \
-                php8-dev \
+                php${PHP_BASE/./}-dev \
                 sqlite-dev \
                 tinyxml2-dev \
                 zstd-dev \
                 && \
     \
+    if [ ! -e "/usr/bin/php-config" ] ; then ln -sf /usr/bin/php-config${PHP_BASE/./} /usr/bin/php-config ; fi; \
     if [ -d "/build-assets/src" ] ; then cp -Rp /build-assets/src/* /usr/src/kopano-core ; fi; \
     if [ -d "/build-assets/scripts" ] ; then for script in /build-assets/scripts/*.sh; do echo "** Applying $script"; bash $script; done ; fi ; \
     mkdir -p /rootfs/assets/.changelogs/ && \
@@ -114,6 +115,7 @@ RUN source /assets/functions/00-container && \
         "7.4" ) php_conf_dir=php7 ;; \
         "8.0" ) php_conf_dir=php8 ;; \
         "8.1" ) php_conf_dir=php81 ;; \
+        "8.2" ) php_conf_dir=php82 ;; \
     esac ; \
     mkdir -p /rootfs/etc/${php_conf_dir}/mods-available/ && \
     mv /rootfs/etc/${php_conf_dir}/conf.d/mapi.ini /rootfs/etc/${php_conf_dir}/mods-available/ && \
