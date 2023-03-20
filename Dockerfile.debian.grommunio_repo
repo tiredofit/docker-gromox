@@ -1,4 +1,4 @@
-ARG PHP_BASE=8.0
+ARG PHP_BASE=8.2
 ARG DISTRO="debian"
 ARG DISTRO_VARIANT="bullseye"
 
@@ -8,7 +8,7 @@ LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 ARG GROMOX_VERSION
 ARG GROMOX_REPO_URL
 
-ENV GO_VERSION=1.19.6 \
+ENV GO_VERSION=1.20.1 \
     GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.6"} \
     GROMOX_REPO_URL=${GROMOX_REPO_URL:-"https://github.com/grommunio/gromox.git"}
 

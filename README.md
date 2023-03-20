@@ -5,7 +5,7 @@
 
 ## About
 
-This will build [Gromox](https://grommunio.com/) from source. There's not much else you can do with this image unless it is paired with another..
+This will build [Gromox](https://gromox.com/) from source. There's not much else you can do with this image unless it is paired with another..
 
 [Changelog](CHANGELOG.md)
 
