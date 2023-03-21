@@ -166,9 +166,9 @@ RUN source /assets/functions/00-container && \
         && \
     \
     mkdir -p /rootfs/assets/grommunio/config && \
-    mkdir -p /rootfs/etc/php/${PHP_VERSION}/mods-available/ && \
-    mv /rootfs/etc/php/${PHP_VERSION}/cli/conf.d/mapi.ini /rootfs/etc/php/${PHP_VERSION}/mods-available/ && \
-    echo ";priority=20" >> /rootfs/etc/php/${PHP_VERSION}/mods-available/mapi.ini && \
+    mkdir -p /rootfs/etc/php/${PHP_BASE}/mods-available/ && \
+    mv /rootfs/etc/php/${PHP_BASE}/cli/conf.d/mapi.ini /rootfs/etc/php/${PHP_BASE}/mods-available/ && \
+    echo ";priority=20" >> /rootfs/etc/php/${PHP_BASE}/mods-available/mapi.ini && \
     ln -sf /config /rootfs/etc/gromox && \
     cd /rootfs && \
     find . -name .git -type d -print0|xargs -0 rm -rf -- && \

@@ -1,8 +1,8 @@
-ARG PHP_BASE=8.2
+ARG PHP_VERSION=8.2
 ARG DISTRO="debian"
 ARG DISTRO_VARIANT="bullseye"
 
-FROM docker.io/tiredofit/nginx-php-fpm:${DISTRO}-${PHP_BASE}-${DISTRO_VARIANT} as gromox-builder
+FROM docker.io/tiredofit/nginx-php-fpm:${PHP_VERSION}-${DISTRO}-${DISTRO_VARIANT} as gromox-builder
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ARG GROMOX_VERSION
@@ -88,7 +88,7 @@ RUN source /assets/functions/00-container && \
                 --enable-release \
                 --enable-static \
                 && \
-    echo "** Starting to build Gromox Core with '$(php -v | head -n1)'" && \
+    echo "** Starting to build Gromox with '$(php -v | head -n1)'" && \
     make -j$(nproc) && \
     make \
         DESTDIR=/rootfs \

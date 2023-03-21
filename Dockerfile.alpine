@@ -71,6 +71,13 @@ RUN source /assets/functions/00-container && \
     \
     clone_git_repo ${GROMOX_REPO_URL} ${GROMOX_VERSION} && \
      \
+    case "${PHP_BASE}" in \
+        "7.4" ) php_conf_dir=php7 ; php_package=7 ;; \
+        "8.0" ) php_conf_dir=php8 ; php_package=8 ;; \
+        "8.1" ) php_conf_dir=php81 ; php_package=81 ;; \
+        "8.2" ) php_conf_dir=php82 ; php_package=82 ;; \
+    esac ; \
+
     apk add -t .gromox-build-deps \
                 curl-dev \
                 fmt-dev \
@@ -81,7 +88,7 @@ RUN source /assets/functions/00-container && \
                 musl-locales \
                 musl-locales-lang \
                 openldap-dev \
-                php${PHP_BASE/./}-dev \
+                php${php_package}-dev \
                 sqlite-dev \
                 tinyxml2-dev \
                 zstd-dev \
@@ -113,12 +120,6 @@ RUN source /assets/functions/00-container && \
         && \
     \
     mkdir -p /rootfs/assets/grommunio/config && \
-    case "${PHP_BASE}" in \
-        "7.4" ) php_conf_dir=php7 ;; \
-        "8.0" ) php_conf_dir=php8 ;; \
-        "8.1" ) php_conf_dir=php81 ;; \
-        "8.2" ) php_conf_dir=php82 ;; \
-    esac ; \
     mkdir -p /rootfs/etc/${php_conf_dir}/mods-available/ && \
     mv /rootfs/etc/${php_conf_dir}/conf.d/mapi.ini /rootfs/etc/${php_conf_dir}/mods-available/ && \
     echo ";priority=20" >> /rootfs/etc/${php_conf_dir}/mods-available/mapi.ini && \
