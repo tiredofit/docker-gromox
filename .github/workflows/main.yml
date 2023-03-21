@@ -8,15 +8,27 @@ on:
     - '**'
     - '!README.md'
 jobs:
-  php74:
+  php74-alpine:
     uses: tiredofit/github_actions/.github/workflows/php74_alpine_amd64.yml@main
     secrets: inherit
-  php80:
+  php80-alpine:
     uses: tiredofit/github_actions/.github/workflows/php80_alpine_amd64.yml@main
     secrets: inherit
-  php81:
+  php81-alpine:
     uses: tiredofit/github_actions/.github/workflows/php81_alpine_amd64.yml@main
     secrets: inherit
-  php82:
+  php82-alpine:
     uses: tiredofit/github_actions/.github/workflows/php82_alpine_amd64.yml@main
+    secrets: inherit
+  php74-debian-bullseye:
+    uses: tiredofit/github_actions/.github/workflows/php74_debian_bullseye_amd64.yml@main
+    secrets: inherit
+  php80-debian-bullseye:
+    uses: tiredofit/github_actions/.github/workflows/php80_debian_bullseye_amd64.yml@main
+    secrets: inherit
+  php81-debian-bullseye:
+    uses: tiredofit/github_actions/.github/workflows/php81_debian_bullseye_amd64.yml@main
+    secrets: inherit
+  php82-debian-bullseye:
+    uses: tiredofit/github_actions/.github/workflows/php82_debian_bullseye_amd64.yml@main
     secrets: inherit

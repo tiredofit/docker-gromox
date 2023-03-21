@@ -1,8 +1,8 @@
-ARG PHP_BASE=8.2
+ARG PHP_VERSION=8.2
 ARG DISTRO="debian"
 ARG DISTRO_VARIANT="bullseye"
 
-FROM docker.io/tiredofit/nginx-php-fpm:${DISTRO}-${PHP_BASE}-${DISTRO_VARIANT} as gromox-builder
+FROM docker.io/tiredofit/nginx-php-fpm:${DISTRO}-${PHP_VERSION}-${DISTRO_VARIANT} as gromox-builder
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ARG GROMOX_VERSION
@@ -14,7 +14,7 @@ ARG LIBFMT_REPO_URL
 ARG LIBHX_REPO_URL
 ARG LIBVMIME_REPO_URL
 
-ENV GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.6"} \
+ENV GROMOX_VERSION=${GROMOX_VERSION:-"3b5c5e73b179dfee598a4f9df4ab1cdc2a7bd79e"} \
     LIBFMT_VERSION=${LIBFMT_VERSION:-"9.1.0"} \
     LIBHX_VERSION=${LIBHX_VERSION:-"v4.12"} \
     LIBVMIME_VERSION=${LIBVMIME_VERSION:-"c6904bd7cf03f6cca92cf0d15aec02e7850e0276"} \
@@ -79,7 +79,7 @@ RUN source /assets/functions/00-container && \
                         libxml2-dev \
                         libtinyxml2-dev \
                         libzstd-dev \
-                        php${PHP_BASE}-dev \
+                        php${PHP_VERSION}-dev \
                         zlib1g-dev \
                         " && \
     \
@@ -158,7 +158,7 @@ RUN source /assets/functions/00-container && \
                 --includedir=/usr/include \
                 --enable-static \
                 && \
-    echo "** Starting to build Gromox Core with '$(php -v | head -n1)'" && \
+    echo "** Starting to build Gromox with '$(php -v | head -n1)'" && \
     make -j$(nproc) && \
     make \
         DESTDIR=/rootfs \
@@ -166,14 +166,15 @@ RUN source /assets/functions/00-container && \
         && \
     \
     mkdir -p /rootfs/assets/grommunio/config && \
-    mkdir -p /rootfs/etc/php/${PHP_BASE}/mods-available/ && \
-    mv /rootfs/etc/php/${PHP_BASE}/cli/conf.d/mapi.ini /rootfs/etc/php/${PHP_BASE}/mods-available/ && \
-    echo ";priority=20" >> /rootfs/etc/php/${PHP_BASE}/mods-available/mapi.ini && \
+    mkdir -p /rootfs/etc/php/${PHP_VERSION}/mods-available/ && \
+    mv /rootfs/etc/php/${PHP_VERSION}/cli/conf.d/mapi.ini /rootfs/etc/php/${PHP_VERSION}/mods-available/ && \
+    echo ";priority=20" >> /rootfs/etc/php/${PHP_VERSION}/mods-available/mapi.ini && \
     ln -sf /config /rootfs/etc/gromox && \
     cd /rootfs && \
     find . -name .git -type d -print0|xargs -0 rm -rf -- && \
     echo "Gromox ${GROMOX_VERSION/gromox-/} built from ${GROMOX_REPO_URL} on $(date)" > /rootfs/assets/.changelogs/gromox.version && \
     echo "Commit: $(cd /usr/src/gromox ; echo $(git rev-parse HEAD))" >> /rootfs/assets/.changelogs/gromox.version && \
+    echo "Built with PHP $(php -v | head -n1) on ${DISTRO} ${DISTRO_VARIANT}" >> /rootfs/assets/.changelogs/gromox.version && \
     env | grep ^GROMOX | sort >> /rootfs/assets/.changelogs/gromox.version && \
     mkdir -p /gromox && \
     tar cavf /gromox/gromox.tar.zst . && \

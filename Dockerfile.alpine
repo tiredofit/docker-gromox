@@ -1,7 +1,7 @@
 ARG DISTRO="alpine"
-ARG PHP_BASE=8.2
+ARG PHP_VERSION=8.2
 
-FROM docker.io/tiredofit/nginx-php-fpm:${PHP_BASE}-${DISTRO} as gromox-builder
+FROM docker.io/tiredofit/nginx-php-fpm:${PHP_VERSION}-${DISTRO} as gromox-builder
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ARG GROMOX_VERSION
@@ -10,7 +10,7 @@ ARG LIBHX_VERSION
 ARG LIBHX_REPO_URL
 ARG LIBVMIME_VERSION
 
-ENV GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.4"} \
+ENV GROMOX_VERSION=${GROMOX_VERSION:-"bfb0fd4790d8e67e3fe99d97a1de0855d1b1006b"} \
     LIBHX_VERSION=${LIBHX_VERSION:-"v4.12"} \
     LIBHX_REPO_URL=${LIBHX_REPO_URL:-"https://codeberg.org/jengelh/libhx"} \
     LIBVMIME_VERSION=${LIBVMIME_VERSION:-"c6904bd7cf03f6cca92cf0d15aec02e7850e0276"} \
@@ -81,13 +81,13 @@ RUN source /assets/functions/00-container && \
                 musl-locales \
                 musl-locales-lang \
                 openldap-dev \
-                php${PHP_BASE/./}-dev \
+                php${PHP_VERSION/./}-dev \
                 sqlite-dev \
                 tinyxml2-dev \
                 zstd-dev \
                 && \
     \
-    if [ ! -e "/usr/bin/php-config" ] ; then ln -sf /usr/bin/php-config${PHP_BASE/./} /usr/bin/php-config ; fi; \
+    if [ ! -e "/usr/bin/php-config" ] ; then ln -sf /usr/bin/php-config${PHP_VERSION/./} /usr/bin/php-config ; fi; \
     if [ -d "/build-assets/src/gromox" ] ; then cp -Rp /build-assets/src/gromox/* /usr/src/gromox ; fi; \
     if [ -d "/build-assets/scripts/gromox" ] ; then for script in /build-assets/scripts/gromox/*.sh; do echo "** Applying $script"; bash $script; done ; fi ; \
     mkdir -p /rootfs/assets/.changelogs/ && \
@@ -113,7 +113,7 @@ RUN source /assets/functions/00-container && \
         && \
     \
     mkdir -p /rootfs/assets/grommunio/config && \
-    case "${PHP_BASE}" in \
+    case "${PHP_VERSION}" in \
         "7.4" ) php_conf_dir=php7 ;; \
         "8.0" ) php_conf_dir=php8 ;; \
         "8.1" ) php_conf_dir=php81 ;; \

@@ -1,3 +1,10 @@
+## 1.0.12 2023-03-21 <dave at tiredofit dot ca>
+
+   ### Added
+      - Switch to Alpine commit bfb0fd4790d8e67e3fe99d97a1de0855d1b1006b to resolve iconv issues post Gromox 2.4
+      - Switch to Debian commit 3b5c5e73b179dfee598a4f9df4ab1cdc2a7bd79e to resolve libfmt and ldd issues post Gromox 2.4
+
+
 ## 1.0.11 2023-03-14 <dave at tiredofit dot ca>
 
    ### Added
