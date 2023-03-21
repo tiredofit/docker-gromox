@@ -81,13 +81,13 @@ RUN source /assets/functions/00-container && \
                 musl-locales \
                 musl-locales-lang \
                 openldap-dev \
-                php${PHP_VERSION/./}-dev \
+                php${PHP_BASE/./}-dev \
                 sqlite-dev \
                 tinyxml2-dev \
                 zstd-dev \
                 && \
     \
-    if [ ! -e "/usr/bin/php-config" ] ; then ln -sf /usr/bin/php-config${PHP_VERSION/./} /usr/bin/php-config ; fi; \
+    if [ ! -e "/usr/bin/php-config" ] ; then ln -sf /usr/bin/php-config${PHP_BASE/./} /usr/bin/php-config ; fi; \
     if [ -d "/build-assets/src/gromox" ] ; then cp -Rp /build-assets/src/gromox/* /usr/src/gromox ; fi; \
     if [ -d "/build-assets/scripts/gromox" ] ; then for script in /build-assets/scripts/gromox/*.sh; do echo "** Applying $script"; bash $script; done ; fi ; \
     mkdir -p /rootfs/assets/.changelogs/ && \
@@ -113,7 +113,7 @@ RUN source /assets/functions/00-container && \
         && \
     \
     mkdir -p /rootfs/assets/grommunio/config && \
-    case "${PHP_VERSION}" in \
+    case "${PHP_BASE}" in \
         "7.4" ) php_conf_dir=php7 ;; \
         "8.0" ) php_conf_dir=php8 ;; \
         "8.1" ) php_conf_dir=php81 ;; \
@@ -127,6 +127,7 @@ RUN source /assets/functions/00-container && \
     find . -name .git -type d -print0|xargs -0 rm -rf -- && \
     echo "Gromox ${GROMOX_VERSION/gromox-/} built from ${GROMOX_REPO_URL} on $(date)" > /rootfs/assets/.changelogs/gromox.version && \
     echo "Commit: $(cd /usr/src/gromox ; echo $(git rev-parse HEAD))" >> /rootfs/assets/.changelogs/gromox.version && \
+    echo "Build with PHP ${PHP_BASE} on ${DISTRO}" >> /rootfs/assets/.changelogs/gromox.version && \
     env | grep ^GROMOX | sort >> /rootfs/assets/.changelogs/gromox.version && \
     mkdir -p /gromox && \
     tar cavf /gromox/gromox.tar.zst . && \
