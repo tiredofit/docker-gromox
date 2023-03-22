@@ -2,7 +2,7 @@ ARG PHP_VERSION=8.2
 ARG DISTRO="debian"
 ARG DISTRO_VARIANT="bullseye"
 
-FROM docker.io/tiredofit/nginx-php-fpm:${DISTRO}-${PHP_VERSION}-${DISTRO_VARIANT} as gromox-builder
+FROM docker.io/tiredofit/nginx-php-fpm:${PHP_VERSION}-${DISTRO}-${DISTRO_VARIANT} as gromox-builder
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ARG GROMOX_VERSION
@@ -39,8 +39,8 @@ RUN source /assets/functions/00-container && \
             --disabled-password \
             gromox && \
     \
-    apt-get update && \
-    apt-get upgrade -y && \
+    package update && \
+    package upgrade && \
     BUILD_DEPS=" \
                         autoconf \
                         automake \
@@ -83,7 +83,7 @@ RUN source /assets/functions/00-container && \
                         zlib1g-dev \
                         " && \
     \
-    apt-get install -y --no-install-recommends \
+    package install \
                         ${BUILD_DEPS} \
                         ${GROMOX_BUILD_DEPS} \
                         ${LIBHX_BUILD_DEPS} \
@@ -179,14 +179,14 @@ RUN source /assets/functions/00-container && \
     mkdir -p /gromox && \
     tar cavf /gromox/gromox.tar.zst . && \
     ### Cleanup
-    apt-get purge -y \
+    package purge \
                 ${BUILD_DEPS} \
                 ${GROMOX_BUILD_DEPS} \
                 && \
-    apt-get autoremove -y && \
-    apt-get clean && \
-    rm -rf /rootfs/* && \
-    rm -rf /usr/src/*
+    package cleanup && \
+    rm -rf \
+            /rootfs/* \
+            /usr/src/*
 
 FROM scratch
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
