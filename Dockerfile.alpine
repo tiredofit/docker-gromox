@@ -10,7 +10,7 @@ ARG LIBHX_VERSION
 ARG LIBHX_REPO_URL
 ARG LIBVMIME_VERSION
 
-ENV GROMOX_VERSION=${GROMOX_VERSION:-"bfb0fd4790d8e67e3fe99d97a1de0855d1b1006b"} \
+ENV GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.7"} \
     LIBHX_VERSION=${LIBHX_VERSION:-"v4.12"} \
     LIBHX_REPO_URL=${LIBHX_REPO_URL:-"https://codeberg.org/jengelh/libhx"} \
     LIBVMIME_VERSION=${LIBVMIME_VERSION:-"c6904bd7cf03f6cca92cf0d15aec02e7850e0276"} \
@@ -85,8 +85,6 @@ RUN source /assets/functions/00-container && \
                 gumbo-parser-dev \
                 jsoncpp-dev \
                 mariadb-connector-c-dev \
-                musl-locales \
-                musl-locales-lang \
                 openldap-dev \
                 php${php_package}-dev \
                 sqlite-dev \
@@ -114,6 +112,7 @@ RUN source /assets/functions/00-container && \
                 && \
     echo "** Starting to build Gromox Core with '$(php -v | head -n1)'" && \
     make -j$(nproc) iconv_LIBS=-liconv && \
+    make -j$(nproc) && \
     make \
         DESTDIR=/rootfs \
         install \
