@@ -1,3 +1,10 @@
+## 1.0.14 2023-06-30 <dave at tiredofit dot ca>
+
+   ### Added
+      - Grommunio 2.10
+      - LibHX 4.13
+
+
 ## 1.0.13 2023-03-23 <dave at tiredofit dot ca>
 
    ### Added
