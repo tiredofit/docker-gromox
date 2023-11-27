@@ -1,3 +1,10 @@
+## 1.0.17 2023-11-27 <dave at tiredofit dot ca>
+
+   ### Added
+      - Gromox 2.18
+      - LibVMIME 1a35bb6d71b6301287e21aaabd112997ea0f0a7f
+
+
 ## 1.0.16 2023-11-16 <dave at tiredofit dot ca>
 
    ### Added
