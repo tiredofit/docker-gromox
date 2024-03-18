@@ -96,8 +96,8 @@ RUN source /assets/functions/00-container && \
     if [ -d "/build-assets/src/gromox" ] ; then cp -Rp /build-assets/src/gromox/* /usr/src/gromox ; fi; \
     if [ -d "/build-assets/scripts/gromox" ] ; then for script in /build-assets/scripts/gromox/*.sh; do echo "** Applying $script"; bash $script; done ; fi ; \
     mkdir -p /rootfs/assets/.changelogs/ && \
-    autoreconf -fiv
-RUN  ./configure \
+    autoreconf -fiv && \
+   ./configure \
                 CXXFLAGS=-fpermissive \
                 CPPFLAGS=-I/usr/include/gnu-libiconv \
                 --prefix /usr \
