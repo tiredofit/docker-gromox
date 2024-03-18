@@ -10,8 +10,8 @@ ARG LIBHX_VERSION
 ARG LIBHX_REPO_URL
 ARG LIBVMIME_VERSION
 
-ENV GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.23"} \
-    LIBHX_VERSION=${LIBHX_VERSION:-"v4.21"} \
+ENV GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.21"} \
+    LIBHX_VERSION=${LIBHX_VERSION:-"v4.23"} \
     LIBVMIME_VERSION=${LIBVMIME_VERSION:-"c3c6242ed135f9eca805380394791d17b0fc7a63"} \
     GROMOX_REPO_URL=${GROMOX_REPO_URL:-"https://github.com/gromox/gromox"} \
     LIBHX_REPO_URL=${LIBHX_REPO_URL:-"https://codeberg.org/jengelh/libhx"} \
@@ -96,8 +96,8 @@ RUN source /assets/functions/00-container && \
     if [ -d "/build-assets/src/gromox" ] ; then cp -Rp /build-assets/src/gromox/* /usr/src/gromox ; fi; \
     if [ -d "/build-assets/scripts/gromox" ] ; then for script in /build-assets/scripts/gromox/*.sh; do echo "** Applying $script"; bash $script; done ; fi ; \
     mkdir -p /rootfs/assets/.changelogs/ && \
-    autoreconf -fiv && \
-    ./configure \
+    autoreconf -fiv
+RUN  ./configure \
                 CXXFLAGS=-fpermissive \
                 CPPFLAGS=-I/usr/include/gnu-libiconv \
                 --prefix /usr \
