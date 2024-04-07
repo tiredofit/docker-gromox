@@ -1,3 +1,9 @@
+## 1.0.23 2024-04-07 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix build issues
+
+
 ## 1.0.22 2024-04-07 <dave at tiredofit dot ca>
 
    ### Changed
