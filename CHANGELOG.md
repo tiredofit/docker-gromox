@@ -1,3 +1,9 @@
+## 1.0.22 2024-04-07 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix version of latest commit
+
+
 ## 1.0.21 2024-04-07 <dave at tiredofit dot ca>
 
    ### Added
