@@ -1,3 +1,9 @@
+## 1.0.24 2024-05-02 <dave at tiredofit dot ca>
+
+   ### Added
+      - Grommunio 2.28
+
+
 ## 1.0.23 2024-04-07 <dave at tiredofit dot ca>
 
    ### Changed

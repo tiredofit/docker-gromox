@@ -9,7 +9,7 @@ ARG GROMOX_VERSION
 ARG GROMOX_REPO_URL
 
 ENV GO_VERSION=1.21.6 \
-    GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.25"} \
+    GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.28"} \
     GROMOX_REPO_URL=${GROMOX_REPO_URL:-"https://github.com/grommunio/gromox.git"}
 
 COPY build-assets /build-assets
