@@ -1,3 +1,11 @@
+## 1.0.25 2024-06-04 <dave at tiredofit dot ca>
+
+   ### Added
+      - Gromox 2.29
+      - LibVMIME a2636bd4ae2c9ed1b4a4a01324300ed1432fd40d
+      - Add PHP 8.3 builds
+
+
 ## 1.0.24 2024-05-02 <dave at tiredofit dot ca>
 
    ### Added
