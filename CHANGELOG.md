@@ -1,3 +1,11 @@
+## 1.0.26 2024-08-14 <dave at tiredofit dot ca>
+
+   ### Added
+      - Gromox 2.31
+      - LibHX 4.24
+      - KMime 43b262bd8c79fbaadc9522eaa04a40427782e0c6
+
+
 ## 1.0.25 2024-06-04 <dave at tiredofit dot ca>
 
    ### Added
