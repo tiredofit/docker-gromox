@@ -1,3 +1,9 @@
+## 1.0.27 2024-09-01 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Pin to Alpine 3.19 for Python 3.11
+
+
 ## 1.0.26 2024-08-14 <dave at tiredofit dot ca>
 
    ### Added

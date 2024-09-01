@@ -1,7 +1,8 @@
 ARG DISTRO="alpine"
+ARG DISTRO_VARIANT="3.19"
 ARG PHP_VERSION=8.2
 
-FROM docker.io/tiredofit/nginx-php-fpm:${PHP_VERSION}-${DISTRO} as gromox-builder
+FROM docker.io/tiredofit/nginx-php-fpm:${PHP_VERSION}-${DISTRO}-${DISTRO_VARIANT} as gromox-builder
 LABEL maintainer="Dave Conroy (github.com/tiredofit)"
 
 ARG GROMOX_VERSION
