@@ -1,3 +1,9 @@
+## 1.0.30 2024-11-06 <dave at tiredofit dot ca>
+
+   ### Added
+      - Redo
+
+
 ## 1.0.29 2024-11-06 <dave at tiredofit dot ca>
 
    ### Added
