@@ -10,15 +10,15 @@ on:
         description: 'Manual Build'
         required: false
 jobs:
-  php81-alpine:
-    uses: tiredofit/github_actions/.github/workflows/php81_alpine_amd64.yml@main
-    secrets: inherit
+  #php81-alpine:
+  #  uses: tiredofit/github_actions/.github/workflows/php81_alpine_amd64.yml@main
+  #  secrets: inherit
   php82-alpine:
     uses: tiredofit/github_actions/.github/workflows/php82_alpine_amd64.yml@main
     secrets: inherit
-  php82-debian-bullseye:
-    uses: tiredofit/github_actions/.github/workflows/php82_debian_bullseye_amd64.yml@main
-    secrets: inherit
-  php83-alpine:
-    uses: tiredofit/github_actions/.github/workflows/php83_alpine_amd64.yml@main
-    secrets: inherit
+  #php82-debian-bullseye:
+  #  uses: tiredofit/github_actions/.github/workflows/php82_debian_bullseye_amd64.yml@main
+  #  secrets: inherit
+  #php83-alpine:
+  #  uses: tiredofit/github_actions/.github/workflows/php83_alpine_amd64.yml@main
+  #  secrets: inherit
