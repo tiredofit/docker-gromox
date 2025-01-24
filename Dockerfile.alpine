@@ -9,14 +9,14 @@ ARG GROMOX_VERSION
 ARG GROMOX_REPO_URL
 ARG LIBHX_VERSION
 ARG LIBHX_REPO_URL
-ARG LIBVMIME_VERSION
+ARG WMIME_VERSION
 
 ENV GROMOX_VERSION=${GROMOX_VERSION:-"gromox-2.39"} \
     LIBHX_VERSION=${LIBHX_VERSION:-"v4.24"} \
-    LIBVMIME_VERSION=${LIBVMIME_VERSION:-"43b262bd8c79fbaadc9522eaa04a40427782e0c6"} \
+    WMIME_VERSION=${WMIME_VERSION:-"wmime-1.0.0"} \
     GROMOX_REPO_URL=${GROMOX_REPO_URL:-"https://github.com/gromox/gromox"} \
     LIBHX_REPO_URL=${LIBHX_REPO_URL:-"https://codeberg.org/jengelh/libhx"} \
-    LIBVMIME_REPO_URL=${LIBVMIME_REPO_URL:-"https://github.com/kisli/vmime"}
+    WMIME_REPO_URL=${WMIME_REPO_URL:-"https://github.com/grommunio/wmime"}
 
 RUN source /assets/functions/00-container && \
     set -x && \
@@ -45,7 +45,7 @@ RUN source /assets/functions/00-container && \
         install-strip \
         && \
     \
-    apk add -t .libvmime-build-deps \
+    apk add -t .wmime-build-deps \
                 !gnutls-dev \
                 cmake \
                 cppunit-dev \
@@ -56,7 +56,7 @@ RUN source /assets/functions/00-container && \
                 openssl-dev \
                 samurai \
                 && \
-    clone_git_repo ${LIBVMIME_REPO_URL} ${LIBVMIME_VERSION} && \
+    clone_git_repo ${WMIME_REPO_URL} ${WMIME_VERSION} && \
     cmake -B . \
             -G "Unix Makefiles" \
             -DCMAKE_BUILD_TYPE=MinSizeRel \
@@ -136,7 +136,7 @@ RUN source /assets/functions/00-container && \
     \
     apk del .container-build-deps \
             .gromox-build-deps \
-            .libvmime-build-deps \
+            .wmime-build-deps \
             && \
     rm -rf /usr/src/* && \
     rm -rf /var/cache/apk/* && \

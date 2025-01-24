@@ -1,3 +1,12 @@
+## 1.0.34 2025-01-24 <dave at tiredofit dot ca>
+
+   ### Added
+      - Introduce wmime 1.0.0
+
+   ### Reverted
+      - Drop dependency on libvmime
+
+
 ## 1.0.33 2025-01-24 <dave at tiredofit dot ca>
 
    ### Added
